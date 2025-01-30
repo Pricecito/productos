@@ -24,10 +24,10 @@ public class Productos implements Serializable {
 
     private String descripcion;
 
-    private double precio;
+    private Double precio;
 
-    private int stock;
+    private Integer stock;
 
-    
+
     
 }
