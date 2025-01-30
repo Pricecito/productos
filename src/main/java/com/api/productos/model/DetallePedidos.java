@@ -1,6 +1,5 @@
 package com.api.productos.model;
 
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ public class DetallePedidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
+
     private Long cantidad;
 
     private Double subtotal;
