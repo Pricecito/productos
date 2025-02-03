@@ -20,7 +20,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "productos")
-public class Productos implements Serializable {
+public class Productos {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
