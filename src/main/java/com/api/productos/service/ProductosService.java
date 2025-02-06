@@ -24,6 +24,7 @@ public class ProductosService {
 
     public Optional<Productos> findById(UUID id) {
         return repository.findById(id);
+        
     }
 
     public Productos save(Productos producto) {
