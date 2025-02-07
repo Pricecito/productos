@@ -3,9 +3,11 @@ package com.api.productos.controller;
 import com.api.productos.model.Usuarios;
 import com.api.productos.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -33,7 +35,8 @@ public class UsuarioController {
     }
     @PostMapping
     public ResponseEntity<Usuarios> save(@RequestBody Usuarios usuariio){
-        return ResponseEntity.created(URI.create("usuarios/"+service.save(usuariio).getId())).build();
+        URI location=URI.create(ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}").buildAndExpand(usuariio.getNombre()).toUriString());
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping
@@ -42,7 +45,8 @@ public class UsuarioController {
         if(Objects.isNull(u)){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(service.save(u));
+        service.save(u);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping
@@ -60,7 +64,7 @@ public class UsuarioController {
         if(Objects.nonNull(usuario.getContraseña())){
             u.setContraseña(usuario.getContraseña());
         }
-        return ResponseEntity.ok(service.save(u));
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
@@ -70,6 +74,6 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
         service.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("El usuario "+id+" ha sido eliminado");
     }
 }
