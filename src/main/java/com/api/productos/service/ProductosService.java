@@ -26,6 +26,9 @@ public class ProductosService {
         return repository.findById(id);
         
     }
+    public List<Productos> saveAll(List<Productos> productos){
+        return repository.saveAll(productos);
+    }
 
     public Productos save(Productos producto) {
         return repository.save(producto);
