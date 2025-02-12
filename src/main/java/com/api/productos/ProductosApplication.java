@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 @Slf4j
 public class ProductosApplication {
@@ -72,11 +74,8 @@ public class ProductosApplication {
 					.stock(30)
 					.categoria(categoria2)
 					.build();
-
+			serviceProductos.saveAll(List.of(producto1, producto2, producto3, producto4, producto5));
 			log.info("Guardando categorias y productos");
-
-
-
 		};
 	}
 

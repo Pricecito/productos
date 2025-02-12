@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +22,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "productos")
+
 public class Productos {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,7 +40,8 @@ public class Productos {
     @Column(nullable = false)
     private Integer stock;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "categoria_id")
     private Categorias categoria;
 

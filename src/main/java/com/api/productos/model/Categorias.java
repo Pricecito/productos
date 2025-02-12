@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+
 public class Categorias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
