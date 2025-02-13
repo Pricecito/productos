@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DetallePedidosDTO {
-
+public class PedidoDTO {
     private Long id;
-    private Long cantidad;
-    private Double subtotal;
-    private Long pedidoId;
-    private String producto;
-
+    private Double total;
+    private String estado;
+    private String fecha_creacion;
+    private String usuario;
 }
