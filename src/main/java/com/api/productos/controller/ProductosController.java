@@ -1,5 +1,6 @@
 package com.api.productos.controller;
 
+import com.api.productos.dto.ProductosDTO;
 import com.api.productos.model.Productos;
 import com.api.productos.model.Usuarios;
 import com.api.productos.service.ProductosService;
@@ -21,17 +22,36 @@ public class ProductosController {
     private ProductosService service;
 
     @GetMapping
-    public ResponseEntity<List<Productos>> findAll(){
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<ProductosDTO>> findAll(){
+        List<Productos> listProductos = service.findAll();
+        if(listProductos.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        List<ProductosDTO> listDTO=listProductos.stream().map(producto -> ProductosDTO.builder()
+                .id(producto.getId().toString())
+                .nombre(producto.getNombre())
+                .descripcion(producto.getDescripcion())
+                .precio(producto.getPrecio())
+                .stock(producto.getStock())
+                .categoria(producto.getCategoria().getNombre())
+                .build()).toList();
+        return ResponseEntity.ok(listDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Productos> findById(@PathVariable("id") UUID id){
+    public ResponseEntity<ProductosDTO> findById(@PathVariable("id") UUID id){
         var producto = service.findById(id).get();
         if(Objects.isNull(producto)){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(producto);
+        ProductosDTO productoDTO=ProductosDTO.builder()
+                .id(producto.getId().toString())
+                .nombre(producto.getNombre())
+                .descripcion(producto.getDescripcion())
+                .precio(producto.getPrecio())
+                .stock(producto.getStock())
+                .build();
+        return ResponseEntity.ok(productoDTO);
     }
 
     @PostMapping

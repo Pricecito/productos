@@ -1,7 +1,9 @@
 package com.api.productos.controller;
 
+import com.api.productos.dto.UsuariosDTO;
 import com.api.productos.model.Usuarios;
 import com.api.productos.service.UsuariosService;
+import io.swagger.v3.oas.models.media.UUIDSchema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -24,16 +23,30 @@ public class UsuarioController {
     private UsuariosService service;
 
     @GetMapping
-    public ResponseEntity<List<Usuarios>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<UsuariosDTO>> findAll() {
+        var listUsers=service.findAll();
+        if(listUsers.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        var dtoList= listUsers.stream().map(user->UsuariosDTO.builder()
+                .id(user.getId().toString())
+                .nombre(user.getNombre())
+                .correo(user.getCorreo())
+                .build()).toList();
+        return ResponseEntity.ok(dtoList);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Usuarios> findById(@PathVariable("id") UUID id){
+    public ResponseEntity<UsuariosDTO> findById(@PathVariable("id") UUID id){
         var user = service.findById(id).get();
         if(Objects.isNull(user)){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(user);
+        var dtoUser=new UsuariosDTO().builder()
+                .id(user.getId().toString())
+                .nombre(user.getNombre())
+                .correo(user.getCorreo())
+                .build();
+        return ResponseEntity.ok(dtoUser);
 
     }
     @PostMapping
