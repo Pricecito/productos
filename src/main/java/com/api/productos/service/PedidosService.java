@@ -2,7 +2,10 @@ package com.api.productos.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+import com.api.productos.model.Pedidos;
+import com.api.productos.repository.PedidosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,21 +17,21 @@ import com.api.productos.repository.DetallePedidosRepository;
 @Transactional
 public class PedidosService {
     @Autowired
-    private DetallePedidosRepository repository;
+    private PedidosRepository repository;
 
-    public List<DetallePedidos> findAll() {
+    public List<Pedidos> findAll() {
         return repository.findAll();
     }
 
-    public Optional<DetallePedidos> findById(Long id) {
+    public Optional<Pedidos> findById(UUID id) {
         return repository.findById(id);
     }
 
-    public DetallePedidos save(DetallePedidos detallePedido) {
-        return repository.save(detallePedido);
+    public Pedidos save(Pedidos pedidos) {
+        return repository.save(pedidos);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 }

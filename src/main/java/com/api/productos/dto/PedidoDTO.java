@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PedidoDTO {
-    private Long id;
+    private String id;
     private Double total;
     private String estado;
     private String fecha_creacion;
