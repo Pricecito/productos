@@ -56,9 +56,9 @@ public class DetallePedidosController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DetallePedidosDTO> update(@PathVariable Long id, @RequestBody DetallePedidosDTO dto) {
-        DetallePedidos detalle = service.update(id, dto);
+    @PutMapping
+    public ResponseEntity<DetallePedidosDTO> update(@RequestBody DetallePedidos dto) {
+        DetallePedidos detalle = service.save(dto);
         DetallePedidosDTO resultDto = DetallePedidosDTO.builder()
                 .id(detalle.getId())
                 .cantidad(detalle.getCantidad())
@@ -66,7 +66,7 @@ public class DetallePedidosController {
                 .producto(detalle.getProducto().getNombre())
                 .pedidoId(detalle.getPedido().getId())
                 .build();
-        return ResponseEntity.ok(resultDto);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
