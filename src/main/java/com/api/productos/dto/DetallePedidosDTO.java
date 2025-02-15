@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +16,7 @@ public class DetallePedidosDTO {
     private Long id;
     private Long cantidad;
     private Double subtotal;
-    private Long pedidoId;
+    private UUID pedidoId;
     private String producto;
 
 }
